@@ -21,7 +21,9 @@ class main_window:
     def __init__(self):
         # PARAMETER
         pygame.display.set_caption(".exe creator")
+        programIcon = pygame.image.load('Image/ico.png')
         self.screen = pygame.display.set_mode(SCREEN) #pygame.FULLSCREEN
+        pygame.display.set_icon(programIcon)
         self.clock = pygame.time.Clock()
 
         # NETWORK
