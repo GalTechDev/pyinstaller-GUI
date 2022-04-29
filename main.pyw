@@ -2,6 +2,7 @@ import pygame
 pygame.init()
 import GTlib as gt
 import tkinter.filedialog as tk
+import pyperclip
 import shutil
 import os
 
@@ -119,7 +120,7 @@ class main_window:
                     self.text_build_statut.color = "white"
                     self.text_build_statut.set_text("Building")
                     self.draw()
-                    os.system(f"pyinstaller {self.file} {f'--icon={self.ico}' if not self.ico=='' else ''} --noconfirm --specpath {output_dir} --distpath {output_dir} {'--onefile' if self.ckeckbox_option1.is_check else ''} {'--noconsole' if self.ckeckbox_option2.is_check else ''}")
+                    os.system(f"pyinstaller {self.file}  {f'-i {self.ico}' if not self.ico=='' else ''} --noconfirm --specpath {output_dir} --distpath {output_dir} {'--onefile' if self.ckeckbox_option1.is_check else ''} {'--noconsole' if self.ckeckbox_option2.is_check else ''}")
                     for dep in self.dep:
                         if dep[0]:
                             shutil.copytree(dep[1], f"{output_dir}/{dep[1].split('/')[-1]}")
@@ -166,7 +167,7 @@ class main_window:
         pygame.display.flip()
 
 
-test_mode=True
+test_mode=False
 if __name__ == '__main__':
     if test_mode:
         root=main_window()
