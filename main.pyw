@@ -11,7 +11,7 @@ import os
 #----------------- Global constante ---------------
 
 SCREEN = (900,600)
-FPS = 60
+FPS = 30
 
 #---------------------- Class ---------------------
 
@@ -101,24 +101,29 @@ class main_window:
         self.boutton_build.event(all_events)
 
         if self.boutton_file.clicked:
+            self.boutton_file.clicked=False
             self.file = tk.askopenfilename(filetypes=[("python files", "*.py *.pyw")], title="Select main file")
         if self.boutton_dep1.clicked:
+            self.boutton_dep1.clicked=False
             file = tk.askopenfilename(title="Select dependente file")
             if not file=="":
                 self.dep.append((False,file))
         if self.boutton_dep2.clicked:
+            self.boutton_dep2.clicked=False
             dir = tk.askdirectory(title="Select dependente folder")
             if not dir=="":
                 self.dep.append((True,dir))
         if self.boutton_icon.clicked:
+            self.boutton_icon.clicked=False
             self.ico = tk.askopenfilename(filetypes=[("Icon", "*.ico")], title="Select icon")
         
         if self.boutton_build.clicked:
+            self.boutton_build.clicked=False
             if not self.file=="":
                 output_dir = tk.askdirectory(title="Save at")
                 if not output_dir=="":
                     self.text_build_statut.color = "white"
-                    self.text_build_statut.set_text("Building")
+                    self.text_build_statut.set_text("Building...")
                     self.draw()
                     os.system(f"pyinstaller {self.file}  {f'-i {self.ico}' if not self.ico=='' else ''} --noconfirm --specpath {output_dir} --distpath {output_dir} {'--onefile' if self.ckeckbox_option1.is_check else ''} {'--noconsole' if self.ckeckbox_option2.is_check else ''}")
                     for dep in self.dep:
@@ -127,7 +132,7 @@ class main_window:
                         else:
                             shutil.copy(dep[1], f"{output_dir}/{dep[1].split('/')[-1]}")
                     self.text_build_statut.color = "green"
-                    self.text_build_statut.set_text("Builded")
+                    self.text_build_statut.set_text("Done")
                 else:
                     self.text_build_statut.color = "white"
                     self.text_build_statut.set_text("Waiting for build...")
